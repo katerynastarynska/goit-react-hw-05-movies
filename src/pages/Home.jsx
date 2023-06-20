@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getTrandingMovies } from '../services/api';
 
+
 const Home = () => {
   const [movies, setMovies] = useState([]);
 
@@ -11,7 +12,6 @@ const Home = () => {
   };
   console.log(movies);
 
-  // fetchMovies()
   useEffect(() => {
     console.log('useeffect');
     fetchMovies();
@@ -26,17 +26,13 @@ const Home = () => {
           return (
             <li key={movie.id}>
               <p>{movie.title || movie.name}</p>
-              {/* <Link to={`${movie}`}>{movie}</Link> */}
             </li>
           );
         })}
       </ul>
     </div>
 
-    //     useEffect(() => {
-    // http щапрос с моунтингом
-    //     }, [])
-  );
+   );
 };
 
 export default Home;

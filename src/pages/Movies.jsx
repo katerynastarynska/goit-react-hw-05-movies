@@ -1,7 +1,7 @@
 import Notiflix from 'notiflix';
 
 import { useState, useEffect } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { getMovieByName } from 'services/api';
 
 const Movies = () => {
@@ -20,6 +20,7 @@ const Movies = () => {
   const handleSubmit = e => {
     e.preventDefault();
     if (searchQuery.trim() === '') {
+      setMovies([]);
       Notiflix.Notify.failure('Please enter movie name');
       return;
     }
@@ -38,6 +39,7 @@ const Movies = () => {
         const data = await getMovieByName(searchQuery);
         console.log(data);
         if (!data?.results?.length) {
+          setMovies([]);
           Notiflix.Notify.failure('Results not found');
           return;
         }
@@ -49,7 +51,7 @@ const Movies = () => {
         setIsSubmitting(false);
       }
     };
-    
+
     if (isSubmitting) {
       fetchMoviesByName(searchQuery);
     }
@@ -78,7 +80,6 @@ const Movies = () => {
             return (
               <li key={movie.id}>
                 <p>{movie.title}</p>
-                {/* <Link to={`${movie}`}>{movie}</Link> */}
               </li>
             );
           })}
