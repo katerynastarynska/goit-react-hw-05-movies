@@ -5,6 +5,13 @@ import MovieDetails from 'pages/MovieDetails';
 import Layout from './Layout';
 import Cast from './Cast';
 import Reviews from './Reviews';
+// import { getTrandingMovies } from '../services/api';
+// getTrandingMovies();
+
+// const fetchImages = async () => {
+// const data =  await getTrandingMovies()
+// console.log(data.results[0].title || data.results[0].name)}
+// fetchImages()
 
 const App = () => {
   return (
