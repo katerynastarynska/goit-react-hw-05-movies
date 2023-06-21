@@ -12,23 +12,31 @@ const KEY = '7dc61a6c44fade8b575440491a92ae90';
 
 export const getTrandingMovies = async () => {
     const response = await fetch(`${BASE_URL}/trending/all/day?api_key=${KEY}`);
-     if (!response.ok) {
-            return Promise.reject(new Error("Bad request"));
-        }
-        return response.json();
-    };
-
-   export const getMovieByName = async (searchQuery) => {
-    console.log('>>> ', searchQuery)
-    const response = await fetch(`${BASE_URL}/search/movie?query=${searchQuery}&api_key=${KEY}`);
-    // console.log('>>>> responce >>> ', await response.json())
-     if (!response.ok) {
+    if (!response.ok) {
         Notiflix.Notify.failure('Service not available');
-            return Promise.reject(new Error("Bad request"));
-        }
-        // console.log(response.json())
-        return response.json();
-        
-    // const data = await response.json();
-    //     return data;
-    };
+
+        return Promise.reject(new Error("Bad request"));
+    }
+    return response.json();
+};
+
+export const getMovieByName = async (searchQuery) => {
+    const response = await fetch(`${BASE_URL}/search/movie?query=${searchQuery}&api_key=${KEY}`);
+    if (!response.ok) {
+        Notiflix.Notify.failure('Service not available');
+        return Promise.reject(new Error("Bad request"));
+    }
+    return response.json();
+
+};
+
+export const getMovieById = async (movieId) => {
+    const response = await fetch(`${BASE_URL}/movie/${movieId}?api_key=${KEY}`);
+    if (!response.ok) {
+        Notiflix.Notify.failure('Service not available');
+
+        return Promise.reject(new Error("Bad request"));
+    }
+    return response.json();
+};
+

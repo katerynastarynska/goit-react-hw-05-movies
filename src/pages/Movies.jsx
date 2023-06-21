@@ -1,7 +1,7 @@
 import Notiflix from 'notiflix';
 
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { getMovieByName } from 'services/api';
 
 const Movies = () => {
@@ -25,7 +25,7 @@ const Movies = () => {
       return;
     }
     setIsSubmitting(true);
-    setSearchParams({ searchQuery: '' });
+    // setSearchParams({ searchQuery: '' });
   };
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const Movies = () => {
       return;
     }
 
-    console.log(searchQuery);
+    // console.log(searchQuery);
     const fetchMoviesByName = async searchQuery => {
       try {
         const data = await getMovieByName(searchQuery);
@@ -44,6 +44,7 @@ const Movies = () => {
           return;
         }
         setMovies(data.results);
+        
         setError(null);
       } catch (error) {
         setError(error);
@@ -55,7 +56,7 @@ const Movies = () => {
     if (isSubmitting) {
       fetchMoviesByName(searchQuery);
     }
-  }, [isSubmitting, searchParams, searchQuery, error]);
+  }, [isSubmitting, searchQuery, error]);
 
   return (
     <>
@@ -73,14 +74,18 @@ const Movies = () => {
         </form>
       </header>
 
+
       <div>
         <ul>
           {movies.map(movie => {
-            // console.log(movie);
             return (
-              <li key={movie.id}>
-                <p>{movie.title}</p>
-              </li>
+            //   <li key={movie.id}>
+            //     <Link></Link>
+            //     <p>{movie.title}</p>
+            //   </li>
+            <Link key={movie.id} to={`${movie.id}`}>
+               <p>{movie.title || movie.name}</p> </Link>
+         
             );
           })}
         </ul>
@@ -90,3 +95,6 @@ const Movies = () => {
 };
 
 export default Movies;
+
+
+// movies/:movieId
