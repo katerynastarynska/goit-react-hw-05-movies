@@ -1,7 +1,7 @@
 import Notiflix from 'notiflix';
 
-import { useEffect, useState } from 'react';
-import { Link, Outlet, useParams } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import { Link, Outlet, useParams, useLocation } from 'react-router-dom';
 import { getMovieById } from 'services/api';
 
 const MovieDetails = () => {
@@ -9,6 +9,10 @@ const MovieDetails = () => {
 
   const [movie, setMovie] = useState('');
   const [error, setError] = useState(null);
+
+  const location = useLocation()
+  const movieLocationRef = useRef(location.state?.from ?? '/movies')
+  console.log(location)
 
   useEffect(() => {
     if (!movieId) return;
@@ -40,7 +44,9 @@ const MovieDetails = () => {
   const { title, poster_path, genres, overview, homepage } = movie;
   return (
     <>
+
       <h2>{title}</h2>
+      <Link to={movieLocationRef.current}>Back to movies</Link>
       {poster_path && (
         <img src={`${base_url}${backdrop_size}${poster_path}`} alt="" />
       )}

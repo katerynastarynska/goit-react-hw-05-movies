@@ -1,39 +1,24 @@
 import Notiflix from 'notiflix';
-
 import { useState, useEffect } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
+
+import Form from 'components/Form';
 import { getMovieByName } from 'services/api';
 
 const Movies = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const searchQuery = searchParams.get('searchQuery') ?? '';
-
+  const [searchParams, setSearchParams] = useSearchParams({});
+  const searchQuery = searchParams.get('movieName') ?? '';
+const location = useLocation()
+console.log(location) 
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleMovieSearch = e => {
-    const value = e.target.value;
-    setSearchParams({ searchQuery: value.toLowerCase() });
-  };
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    if (searchQuery.trim() === '') {
-      setMovies([]);
-      Notiflix.Notify.failure('Please enter movie name');
-      return;
-    }
-    setIsSubmitting(true);
-    // setSearchParams({ searchQuery: '' });
-  };
 
   useEffect(() => {
+    // const searchQuery = searchParams.get('movieName') ?? '';
     if (!searchQuery) {
       return;
     }
 
-    // console.log(searchQuery);
     const fetchMoviesByName = async searchQuery => {
       try {
         const data = await getMovieByName(searchQuery);
@@ -44,48 +29,28 @@ const Movies = () => {
           return;
         }
         setMovies(data.results);
-        
         setError(null);
       } catch (error) {
         setError(error);
-      } finally {
-        setIsSubmitting(false);
       }
     };
 
-    if (isSubmitting) {
-      fetchMoviesByName(searchQuery);
-    }
-  }, [isSubmitting, searchQuery, error]);
+    fetchMoviesByName(searchQuery);
+  }, [searchParams, error, searchQuery]);
 
   return (
     <>
       <header>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            autoComplete="off"
-            autoFocus
-            value={searchQuery}
-            placeholder="Search movies"
-            onChange={handleMovieSearch}
-          />
-          <button type="submit">Search</button>
-        </form>
+        <Form setSearchParams={setSearchParams} />
       </header>
-
 
       <div>
         <ul>
           {movies.map(movie => {
             return (
-            //   <li key={movie.id}>
-            //     <Link></Link>
-            //     <p>{movie.title}</p>
-            //   </li>
-            <Link key={movie.id} to={`${movie.id}`}>
-               <p>{movie.title || movie.name}</p> </Link>
-         
+              <Link key={movie.id} to={`${movie.id}`} state={{from: location}}>
+                <p>{movie.title || movie.name}</p>{' '}
+              </Link>
             );
           })}
         </ul>
@@ -95,6 +60,3 @@ const Movies = () => {
 };
 
 export default Movies;
-
-
-// movies/:movieId
