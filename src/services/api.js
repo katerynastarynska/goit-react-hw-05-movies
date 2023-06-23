@@ -34,9 +34,20 @@ export const getMovieById = async (movieId) => {
     const response = await fetch(`${BASE_URL}/movie/${movieId}?api_key=${KEY}`);
     if (!response.ok) {
         Notiflix.Notify.failure('Service not available');
-
         return Promise.reject(new Error("Bad request"));
     }
     return response.json();
 };
 
+export const getCastMovie = async (movieId) => {
+    const response = await fetch(`${BASE_URL}/movie/${movieId}/credits?api_key=${KEY}`);
+    if (!response.ok) {
+        Notiflix.Notify.failure('Service not available');
+        return Promise.reject(new Error("Bad request"));
+    }
+    return response.json();
+}
+
+
+// https://api.themoviedb.org/3/movie/976573/credits?api_key=7dc61a6c44fade8b575440491a92ae90&profile_path=/liV9OXUeo7T19hhjFlqTELtETnW.jpg
+// http://image.tmdb.org/t/p/w300/liV9OXUeo7T19hhjFlqTELtETnW.jpg

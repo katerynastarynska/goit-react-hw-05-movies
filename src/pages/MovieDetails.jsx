@@ -1,6 +1,6 @@
 import Notiflix from 'notiflix';
 
-import { useEffect, useRef, useState } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import { Link, Outlet, useParams, useLocation } from 'react-router-dom';
 import { getMovieById } from 'services/api';
 
@@ -10,18 +10,15 @@ const MovieDetails = () => {
   const [movie, setMovie] = useState('');
   const [error, setError] = useState(null);
 
-  const location = useLocation()
-  const movieLocationRef = useRef(location.state?.from ?? '/movies')
-  console.log(location)
+  const location = useLocation();
+  const movieLocationRef = useRef(location.state?.from ?? '/movies');
 
   useEffect(() => {
     if (!movieId) return;
-    console.log(movieId);
 
     const fetchMoviesById = async movieId => {
       try {
         const data = await getMovieById(movieId);
-        console.log(data);
         if (!data) {
           setMovie('');
           Notiflix.Notify.failure('Results not found');
@@ -39,12 +36,10 @@ const MovieDetails = () => {
 
   const base_url = 'http://image.tmdb.org/t/p/';
   const backdrop_size = 'w300/';
-  console.log(movie);
 
   const { title, poster_path, genres, overview, homepage } = movie;
   return (
     <>
-
       <h2>{title}</h2>
       <Link to={movieLocationRef.current}>Back to movies</Link>
       {poster_path && (
@@ -57,7 +52,7 @@ const MovieDetails = () => {
       <h3>Overview:</h3>
       <p>{overview}</p>
       <a href={homepage}>{homepage}</a>
-    
+
       <h3>Additional information:</h3>
       <ul>
         <li>
@@ -67,7 +62,9 @@ const MovieDetails = () => {
           <Link to="reviews">Reviews</Link>
         </li>
       </ul>
-      <Outlet />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Outlet />
+      </Suspense>
     </>
   );
 };
