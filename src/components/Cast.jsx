@@ -28,8 +28,6 @@ const Cast = () => {
   const base_url = 'http://image.tmdb.org/t/p/';
   const image_size = 'w92/';
 
-  console.log(movieCast);
-
   return (
     <div>
       <ul>
