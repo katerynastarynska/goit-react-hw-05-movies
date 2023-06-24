@@ -8,13 +8,11 @@ import { getMovieByName } from 'services/api';
 const Movies = () => {
   const [searchParams, setSearchParams] = useSearchParams({});
   const searchQuery = searchParams.get('movieName') ?? '';
-const location = useLocation()
-console.log(location) 
+  const location = useLocation();
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // const searchQuery = searchParams.get('movieName') ?? '';
     if (!searchQuery) {
       return;
     }
@@ -22,7 +20,6 @@ console.log(location)
     const fetchMoviesByName = async searchQuery => {
       try {
         const data = await getMovieByName(searchQuery);
-        console.log(data);
         if (!data?.results?.length) {
           setMovies([]);
           Notiflix.Notify.failure('Results not found');
@@ -46,10 +43,14 @@ console.log(location)
 
       <div>
         <ul>
-          {movies.map(movie => {
+          {movies.map(({id, title, name}) => {
             return (
-              <Link key={movie.id} to={`${movie.id}`} state={{from: location}}>
-                <p>{movie.title || movie.name}</p>{' '}
+              <Link
+                key={id}
+                to={`${id}`}
+                state={{ from: location }}
+              >
+                <p>{title || name}</p>{' '}
               </Link>
             );
           })}

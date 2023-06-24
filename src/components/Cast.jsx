@@ -1,14 +1,11 @@
-import Notiflix from 'notiflix';
-
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { getCastMovie } from 'services/api';
+import { getMovieCast } from 'services/api';
 import imgDefault from '../assets/default-image.png';
-// 
+
 const Cast = () => {
   const { movieId } = useParams();
-  console.log(movieId);
 
   const [movieCast, setMovieCast] = useState([]);
   const [error, setError] = useState(null);
@@ -16,44 +13,44 @@ const Cast = () => {
   useEffect(() => {
     if (!movieId) return;
 
-    const fetchCastMovie = async movieId => {
+    const fetchMovieCast = async movieId => {
       try {
-        const data = await getCastMovie(movieId);
-  
-        if (!data) {
-          setMovieCast([]);
-          Notiflix.Notify.failure('No information');
-          return;
-        }
+        const data = await getMovieCast(movieId);
         setMovieCast(data.cast);
         setError(null);
       } catch (error) {
         setError(error);
       }
     };
-    fetchCastMovie(movieId);
+    fetchMovieCast(movieId);
   }, [movieId, error]);
 
   const base_url = 'http://image.tmdb.org/t/p/';
   const image_size = 'w92/';
 
+  console.log(movieCast);
+
   return (
     <div>
       <ul>
-        {movieCast &&
-          movieCast.map(item => (
-            <li key={item.id}>
+        {movieCast.length !== 0 ? (
+          movieCast.map(({ id, profile_path, name, character }) => (
+            <li key={id}>
               <img
-                src={item.profile_path
-                    ? `${base_url}${image_size}${item.profile_path}`
+                src={
+                  profile_path
+                    ? `${base_url}${image_size}${profile_path}`
                     : imgDefault
                 }
                 alt=""
               />
-              <h5>{item.name}</h5>
-              <p>Character: {item.character}</p>
+              <h5>{name}</h5>
+              <p>Character: {character}</p>
             </li>
-          ))}
+          ))
+        ) : (
+          <li>No information</li>
+        )}
       </ul>
     </div>
   );

@@ -3,6 +3,8 @@ import Notiflix from 'notiflix';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import { Link, Outlet, useParams, useLocation } from 'react-router-dom';
 import { getMovieById } from 'services/api';
+import imgDefault from '../assets/default-movie.png'
+import Loader from 'components/Loader/Loader';
 
 const MovieDetails = () => {
   const { movieId } = useParams();
@@ -42,10 +44,11 @@ const MovieDetails = () => {
     <>
       <h2>{title}</h2>
       <Link to={movieLocationRef.current}>Back to movies</Link>
-      {poster_path && (
-        <img src={`${base_url}${backdrop_size}${poster_path}`} alt="" />
-      )}
-
+      
+        <img src=
+        { poster_path ? 
+          `${base_url}${backdrop_size}${poster_path}` : imgDefault} alt="" />
+      
       <h3>Genres:</h3>
       {genres && genres.map(genre => <li key={genre.id}>{genre.name}</li>)}
 
@@ -62,7 +65,7 @@ const MovieDetails = () => {
           <Link to="reviews">Reviews</Link>
         </li>
       </ul>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Loader />}>
         <Outlet />
       </Suspense>
     </>

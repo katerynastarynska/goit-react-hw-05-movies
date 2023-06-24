@@ -10,7 +10,6 @@ const Home = () => {
     const fetchMovies = async () => {
       try {
         const data = await getTrandingMovies();
-        console.log(data.results);
         setMovies(data.results);
       } catch (error) {
         Notiflix.Notify.failure('Service not available');
@@ -24,7 +23,6 @@ const Home = () => {
       <h2>Trending now</h2>
       <ul>
         {movies.map(movie => {
-          // console.log(movie);
           return (
             <Link key={movie.id} to={`movies/${movie.id}`}>
               <p>{movie.title || movie.name}</p>{' '}
