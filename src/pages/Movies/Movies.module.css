@@ -1,0 +1,27 @@
+.searchedMoviesList {
+  display: flex;
+  flex-wrap: wrap;
+}
+.searchedMoviesItem {
+  border: 1px solid rgb(255, 255, 255);
+  border-radius: 5px;
+  text-decoration: none;
+  width: 154px;
+  margin-right: 15px;
+  margin-bottom: 15px;
+  overflow: hidden;
+}
+.searchedMoviesName {
+  color: white;
+  text-align: center;
+}
+.searchedMoviesName:hover {
+  color: rgb(199, 199, 199);
+}
+.searchedMoviesNameContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+  margin-right: 5px;
+}

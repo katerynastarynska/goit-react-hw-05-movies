@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import Notiflix from 'notiflix';
 
+import css from './Form.module.css';
+
 const Form = ({ setSearchParams }) => {
   const [movieName, setMovieName] = useState('');
 
@@ -24,17 +26,22 @@ const Form = ({ setSearchParams }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        autoComplete="off"
-        autoFocus
-        value={movieName}
-        placeholder="Search movies"
-        onChange={handleMovieSearch}
-      />
-      <button type="submit">Search</button>
-    </form>
+    <div className={css.searchbar}>
+      <form className={css.searchForm} onSubmit={handleSubmit}>
+        <input
+          className={css.inputSearch}
+          type="text"
+          autoComplete="off"
+          autoFocus
+          value={movieName}
+          placeholder="Movie name"
+          onChange={handleMovieSearch}
+        />
+        <button className={css.searchBtn} type="submit">
+          Search
+        </button>
+      </form>
+    </div>
   );
 };
 

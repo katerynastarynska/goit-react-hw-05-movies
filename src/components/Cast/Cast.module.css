@@ -1,0 +1,47 @@
+.castList {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 20px;
+}
+.castListItem {
+  border: 1px solid rgb(255, 255, 255);
+  border-radius: 5px;
+  text-decoration: none;
+  list-style: none;
+  width: 92px;
+  margin-right: 15px;
+  margin-bottom: 15px;
+  overflow: hidden;
+}
+.castListActorName {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 25px;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+}
+.castListCharacter {
+  text-align: center;
+}
+.castListCharacterTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgb(180, 180, 180);
+  margin: 0;
+}
+.castListCharacterName {
+  font-size: 12px;
+  font-weight: 400;
+  color: rgb(199, 199, 199);
+}
+.castListNoInfo {
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  list-style: none;
+}

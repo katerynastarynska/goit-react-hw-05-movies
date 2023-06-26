@@ -1,0 +1,37 @@
+.mainTitle {
+  color: white;
+  padding-top: 25px;
+  font-size: 40px;
+  font-weight: normal;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 0;
+}
+.trendingMoviesList {
+  display: flex;
+  flex-wrap: wrap;
+}
+.trendingMoviesItem {
+  border: 1px solid rgb(255, 255, 255);
+  border-radius: 5px;
+  text-decoration: none;
+  width: 154px;
+  margin-right: 15px;
+  margin-bottom: 15px;
+  overflow: hidden;
+}
+.trendingMoviesName {
+  color: white;
+  text-align: center;
+}
+.trendingMoviesName:hover {
+  color: rgb(199, 199, 199);
+}
+.trendingMoviesNameContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+  margin-right: 5px;
+}

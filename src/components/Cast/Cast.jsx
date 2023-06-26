@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { getMovieCast } from 'services/api';
-import imgDefault from '../assets/default-image.png';
+import imgDefault from '../../assets/default-image.png';
+import css from './Cast.module.css';
 
 const Cast = () => {
   const { movieId } = useParams();
@@ -30,24 +31,30 @@ const Cast = () => {
 
   return (
     <div>
-      <ul>
+      <ul className={css.castList}>
         {movieCast.length !== 0 ? (
           movieCast.map(({ id, profile_path, name, character }) => (
-            <li key={id}>
+            <li className={css.castListItem} key={id}>
               <img
+                className={css.castImage}
                 src={
                   profile_path
                     ? `${base_url}${image_size}${profile_path}`
                     : imgDefault
                 }
-                alt=""
+                alt={name}
               />
-              <h5>{name}</h5>
-              <p>Character: {character}</p>
+              <h5 className={css.castListActorName}>{name}</h5>
+              <div className={css.castListCharacter}>
+                <h6 className={css.castListCharacterTitle}>
+                  Character:
+                  <p className={css.castListCharacterName}>{character}</p>
+                </h6>
+              </div>
             </li>
           ))
         ) : (
-          <li>No information</li>
+          <li className={css.castListNoInfo}>No information</li>
         )}
       </ul>
     </div>
