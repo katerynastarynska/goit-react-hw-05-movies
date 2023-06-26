@@ -15,7 +15,7 @@ const MovieDetails = () => {
   const [error, setError] = useState(null);
 
   const location = useLocation();
-  const movieLocationRef = useRef(location.state?.from ?? '/movies');
+  const movieLocationRef = useRef(location.state?.from ?? '/');
 
   useEffect(() => {
     if (!movieId) return;
